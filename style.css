@@ -36,17 +36,18 @@
 
 .question__text {
     display: inline-block;
-    padding-left: 20px;
-    border-left: 2px solid antiquewhite;
-    line-height: 75px;
+    text-align: center;
+    margin: auto;
     font-size: 16px;
-    height: 100%;
 }
 
 .question__counter {
     display: inline-block;
     width: 40px;
-    margin: auto 25px auto;
+    margin: auto 0 auto 25px;
+    padding-right: 20px;
+    line-height: 75px;
+    border-right: 2px solid antiquewhite;
     font-size: 25px;
     font-style: italic;
 }
@@ -60,24 +61,30 @@
     cursor: pointer;
 }
 
-.quizBody__nextButton  {
+.quizBody__nextButton, .quizBody__nextButton-disabled {
     cursor: pointer;
     background-color: white;
     border: none;
     display: block;
-    height: 30px;
+    height: 40px;
     width: 50%;
-    margin: 20px auto 0px auto;
+    margin: 15px auto auto auto;
     border-radius: 10px;
+    font-size: 18px;
+}
+
+.quizBody__nextButton-disabled {
+    cursor: default;
+    background-color: lightgray;
 }
 
 .quizBody__nextButton:hover {
-    background-color: aquamarine;
-    transition: background-color 1s;
+    background-color: cadetblue;
+    transition: background-color 0.5s;
 }
 
 .quizBody__nextButton:not(hover) {
-    transition: 1s;
+    transition: 0.5s;
 }
 
 .quizBody__nextButton:hover:active {
@@ -92,6 +99,7 @@
 
 .quizBody__answerOption-text {
     margin: auto;
+    margin-left: 25px;
 }
 
 .question__text, .quizBody__answerOption-text {
