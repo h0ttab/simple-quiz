@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="quizBody">
+            <div class="question">
+                <span class="question__counter">1/5</span>
+                <span class="question__text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, sit?</span>
+            </div>
+            <div class="quizBody__answerOption answerOption1" onclick="answerOnClick('answerOption1')">
+                <input type="radio" class="quizBody__answerOption-selector" name="selectedAnswer">
+                <span class="quizBody__answerOption-text answerOption1">Lorem ipsum dolor sit amet.</span>
+            </div>
+            <div class="quizBody__answerOption answerOption2"
+            onclick="answerOnClick('answerOption2')">
+                <input type="radio" class="quizBody__answerOption-selector" name="selectedAnswer">
+                <span class="quizBody__answerOption-text answerOption2">Lorem ipsum dolor sit amet.</span>
+            </div>
+            <div class="quizBody__answerOption answerOption3"
+            onclick="answerOnClick('answerOption3')">
+                <input type="radio" class="quizBody__answerOption-selector" name="selectedAnswer">
+                <span class="quizBody__answerOption-text answerOption3">Lorem ipsum dolor sit amet.</span>
+            </div>
+            <div class="quizBody__answerOption answerOption4"
+            onclick="answerOnClick('answerOption4')">
+                <input type="radio" class="quizBody__answerOption-selector" name="selectedAnswer">
+                <span class="quizBody__answerOption-text answerOption4">Lorem ipsum dolor sit amet.</span>
+            </div>
+            <button class="quizBody__nextButton">Next question</button>
+        </div>
+    </div>
+</body>
+</html>
