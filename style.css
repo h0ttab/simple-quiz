@@ -38,7 +38,7 @@
     display: inline-block;
     text-align: center;
     margin: auto;
-    font-size: 16px;
+    font-size: 24px;
 }
 
 .question__counter {
@@ -100,6 +100,23 @@
 .quizBody__answerOption-text {
     margin: auto;
     margin-left: 25px;
+}
+
+.resultPage {
+    display: flex;
+    background-color: antiquewhite;
+    width: 620px;
+    height: 420px;
+    border-radius: 30px;
+    margin: 2.25% auto 2.25% auto;
+}
+
+.resultText {
+    display: block;
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+    font-size: 45px;
 }
 
 .question__text, .quizBody__answerOption-text {
