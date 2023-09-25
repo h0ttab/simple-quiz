@@ -77,6 +77,7 @@ function nextQuestion(){
     const questions = getQuestions();
     sessionStorage.setItem("currentQuestion", +sessionStorage.getItem("currentQuestion") + 1);
     nextButton.className = "quizBody__nextButton-disabled";
+    nextButton.disabled = "disabled";
     answers.forEach((el)=>{
         const currentButton = el.querySelector('input[type="radio"]');
         if (currentButton.checked == true){
@@ -127,5 +128,7 @@ function resetQuiz(){
     })
     const button = document.querySelector('.quizBody>button');
     button.style.display = 'block';
+    button.className = "quizBody__nextButton-disabled";
+    button.disabled = "disabled";
     renderPage();
 }
