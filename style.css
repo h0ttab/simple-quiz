@@ -103,7 +103,7 @@
 }
 
 .resultPage {
-    display: flex;
+    display: block;
     background-color: antiquewhite;
     width: 620px;
     height: 420px;
@@ -115,6 +115,8 @@
     display: block;
     width: fit-content;
     margin: auto;
+    padding-top: 20%;
+    position: relative;
     text-align: center;
     font-size: 45px;
 }

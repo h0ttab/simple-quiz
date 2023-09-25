@@ -32,7 +32,7 @@
         "correctAnswer": "Win+D"
     },
     {
-        "questionText": "Чему равен факториал 5 (!5) ?",
+        "questionText": "Чему равен факториал 5 (5!) ?",
         "option1": "5",
         "option2": "120",
         "option3": "125",

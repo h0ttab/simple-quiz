@@ -107,7 +107,12 @@ function getScore(){
     resultText.innerText = `Правильных ответов : 
     ${sessionStorage.getItem('corretAnswersTotal')} из ${questions.length}`;
     
+    const resetButton = document.createElement('button');
+    resetButton.className = "quizBody__nextButton";
+    resetButton.onclick = resetQuiz;
+    resetButton.innerText = 'Попробовать ещё раз';
     resultPage.appendChild(resultText);
+    resultPage.appendChild(resetButton);
     body.appendChild(resultPage);
 }
 
