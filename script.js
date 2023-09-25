@@ -20,6 +20,9 @@ function initializeQuestions(){
 }
 
 function getQuestions(){
+    if (sessionStorage.getItem("questions") == null){
+        fetch('questions.json').then(response => response.json()).then(data => {setQuestions(data)});
+    }
     return JSON.parse(sessionStorage.getItem("questions"));
 }
 
@@ -106,4 +109,18 @@ function getScore(){
     
     resultPage.appendChild(resultText);
     body.appendChild(resultPage);
+}
+
+function resetQuiz(){
+    sessionStorage.setItem("corretAnswersTotal", 0);
+    sessionStorage.setItem("currentQuestion", 0);
+    const resultPage = document.querySelector(".resultPage")
+    resultPage.remove();
+    const toShow = document.querySelectorAll('.quizBody>div');
+    toShow.forEach((el)=>{
+        el.style.display = 'flex';
+    })
+    const button = document.querySelector('.quizBody>button');
+    button.style.display = 'block';
+    renderPage();
 }
