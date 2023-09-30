@@ -4,11 +4,16 @@
     font-family: sans-serif;
 }
 
+body {
+    overflow: visible;
+    height: 100vh;
+}
+
 .wrapper {
     display: flex;
     background-color: cadetblue;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 }
 
 .quizBody {
@@ -76,6 +81,7 @@
 .quizBody__nextButton-disabled {
     cursor: default;
     background-color: lightgray;
+    color: black;
 }
 
 .quizBody__nextButton:hover {
