@@ -1,3 +1,5 @@
+"use strict"
+
 const body = document.querySelector('.quizBody');
 
 const question__counter = document.querySelector(".question__counter");
