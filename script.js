@@ -1,5 +1,3 @@
-"use strict"
-
 const body = document.querySelector('.quizBody');
 
 const question__counter = document.querySelector(".question__counter");
@@ -14,7 +12,37 @@ const answerOption4 = document.querySelector(".answerOption4>span");
 
 const nextButton = document.querySelector(".quizBody>button");
 
-fetch('questions.json').then(response => response.json()).then(data => {setQuestions(data); renderPage()});
+const BUTTONS = {
+    status : {
+        disabled: true,
+        enabled: false,
+    },
+    class : {
+        disabled: "quizBody__nextButton-disabled",
+        enabled : "quizBody__nextButton",
+    },
+    color : {
+        disabled: "white",
+        enabled: "cadetblue",
+    },
+    innerText: {
+        result: "Перейти к результатам",
+        reset: "Попробовать ещё раз",
+    },
+}
+
+const RESULT = {
+    text: {
+        class: "resultText",
+        innerText: ()=>{return `Правильных ответов : 
+        ${Number(sessionStorage.getItem('corretAnswersTotal'))} из ${(getQuestions()).length}`
+    }},
+    page: {
+        class: "resultPage"
+    }
+}
+
+fetch('questions.json').then(response => response.json()).then(data => {setQuestions(data); renderPage()})
 
 function initializeQuestions(){
     sessionStorage.setItem("currentQuestion", 0);
@@ -22,9 +50,6 @@ function initializeQuestions(){
 }
 
 function getQuestions(){
-    if (sessionStorage.getItem("questions") == null){
-        fetch('questions.json').then(response => response.json()).then(data => {setQuestions(data)});
-    }
     return JSON.parse(sessionStorage.getItem("questions"));
 }
 
@@ -33,8 +58,8 @@ function setQuestions(arr){
 }
 
 function answerOnClick(option){
-    nextButton.className = "quizBody__nextButton";
-    nextButton.removeAttribute('disabled');
+    nextButton.className = BUTTONS.class.enabled;
+    nextButton.disabled = BUTTONS.status.enabled;
     nextButton.addEventListener('click', nextQuestion)
     const button = document.querySelector(`.${option}>input[type="radio"]`);
     const answers = document.querySelectorAll(".quizBody__answerOption")
@@ -42,9 +67,9 @@ function answerOnClick(option){
     answers.forEach((el)=>{
         const currentButton = el.querySelector('input[type="radio"]');
         if (currentButton.checked){
-            el.style.background = 'cadetblue';
+            el.style.background = BUTTONS.color.enabled;
         } else {
-            el.style.background = 'white';
+            el.style.background = BUTTONS.color.disabled;
         }
     })
 }
@@ -60,12 +85,12 @@ function renderPage(){
         answerOption2.textContent = question["option2"];
         answerOption3.textContent = question["option3"];
         answerOption4.textContent = question["option4"];
-        if (question.orderNumber == questions.length) {
-            nextButton.textContent = 'Перейти к результатам'
-            nextButton.disabled  = 'disabled'
+        if (currentQuestion == questions.length - 1) {
+            nextButton.innerText = BUTTONS.innerText.result;
+            nextButton.disabled  = BUTTONS.status.disabled;
         }
     } else {
-        nextButton.className = "quizBody__nextButton-disabled";
+        nextButton.className = BUTTONS.class.disabled;
         const toHide = document.querySelectorAll('.quizBody>*')
         toHide.forEach((el)=>{
             el.style.display = 'none';
@@ -77,16 +102,16 @@ function renderPage(){
 function nextQuestion(){
     const answers = document.querySelectorAll(".quizBody__answerOption");
     const questions = getQuestions();
-    sessionStorage.setItem("currentQuestion", +sessionStorage.getItem("currentQuestion") + 1);
-    nextButton.className = "quizBody__nextButton-disabled";
-    nextButton.disabled = "disabled";
+    sessionStorage.setItem("currentQuestion", Number(sessionStorage.getItem("currentQuestion")) + 1);
+    nextButton.className = BUTTONS.class.disabled;
+    nextButton.disabled = BUTTONS.status.disabled;
     answers.forEach((el)=>{
         const currentButton = el.querySelector('input[type="radio"]');
         if (currentButton.checked == true){
             const userAnswerText = document.querySelector(`.${el.classList[1]}>span`);
             questions[sessionStorage.getItem("currentQuestion") - 1].userAnswer = userAnswerText.textContent;
         }
-        el.style.background = 'white';
+        el.style.background = BUTTONS.color.disabled;
         currentButton.checked = false;
     })
     setQuestions(questions);
@@ -99,21 +124,20 @@ function getScore(){
     questions.forEach((el)=>{
         if(el.userAnswer == el.correctAnswer){
             corretAnswersTotal += 1;
-            sessionStorage.setItem("corretAnswersTotal", corretAnswersTotal);
         }
+        sessionStorage.setItem("corretAnswersTotal", corretAnswersTotal);
     })
     const resultPage = document.createElement('div');
-    resultPage.className = 'resultPage';
+    resultPage.className = RESULT.page.class;
     
     const resultText = document.createElement('span');
-    resultText.className = 'resultText'; 
-    resultText.innerText = `Правильных ответов : 
-    ${sessionStorage.getItem('corretAnswersTotal')} из ${questions.length}`;
+    resultText.className = RESULT.text.class; 
+    resultText.innerText = RESULT.text.innerText();
     
     const resetButton = document.createElement('button');
-    resetButton.className = "quizBody__nextButton";
+    resetButton.className = BUTTONS.class.enabled;
     resetButton.onclick = resetQuiz;
-    resetButton.innerText = 'Попробовать ещё раз';
+    resetButton.innerText = BUTTONS.innerText.reset;
     resultPage.appendChild(resultText);
     resultPage.appendChild(resetButton);
     body.appendChild(resultPage);
@@ -130,7 +154,7 @@ function resetQuiz(){
     })
     const button = document.querySelector('.quizBody>button');
     button.style.display = 'block';
-    button.className = "quizBody__nextButton-disabled";
-    button.disabled = "disabled";
+    button.className = BUTTONS.class.disabled;
+    button.disabled = BUTTONS.status.disabled;
     renderPage();
 }
