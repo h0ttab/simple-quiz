@@ -12,6 +12,7 @@ const answerOption4 = document.querySelector(".answerOption4>span");
 
 const nextButton = document.querySelector(".quizBody>button");
 
+// Добавил переменные, которые хранят состояния цвета/активности/класса/и т.д. для кнопок и элементов страницы результатов
 const BUTTONS = {
     status : {
         disabled: true,
@@ -33,16 +34,24 @@ const BUTTONS = {
 
 const RESULT = {
     text: {
-        class: "resultText",
-        innerText: ()=>{return `Правильных ответов : 
-        ${Number(sessionStorage.getItem('corretAnswersTotal'))} из ${(getQuestions()).length}`
-    }},
+        class: "resultText"
+    },
     page: {
         class: "resultPage"
     }
-}
+};
 
-fetch('questions.json').then(response => response.json()).then(data => {setQuestions(data); renderPage()})
+// Использовал функцию на Axios, которая заменила функцию на Fetch API с таким же функционалом.
+(async function (){
+    try{
+    const response = await axios.get('questions.json');
+    const data = await response.data;
+    setQuestions(data);
+    renderPage();
+    } catch (err){
+        console.log(err);
+    }
+}());
 
 function initializeQuestions(){
     sessionStorage.setItem("currentQuestion", 0);
@@ -120,7 +129,7 @@ function nextQuestion(){
 
 function getScore(){
     const questions = getQuestions();
-    let corretAnswersTotal = 0;
+    let corretAnswersTotal = Number(sessionStorage.getItem("corretAnswersTotal")) ?? 0;
     questions.forEach((el)=>{
         if(el.userAnswer == el.correctAnswer){
             corretAnswersTotal += 1;
@@ -132,7 +141,8 @@ function getScore(){
     
     const resultText = document.createElement('span');
     resultText.className = RESULT.text.class; 
-    resultText.innerText = RESULT.text.innerText();
+    resultText.innerText = `Правильных ответов : 
+    ${Number(sessionStorage.getItem('corretAnswersTotal'))} из ${(getQuestions()).length}`;
     
     const resetButton = document.createElement('button');
     resetButton.className = BUTTONS.class.enabled;
